@@ -15,5 +15,27 @@ void delay(unsigned int ms)
     }
 } 
 
+int send2displays(unsigned int value, int base)
+{
+    static char displayFlag = 0;
+    int high = value / base;
+    int low = value % base;
 
+    high = display7codes(high);
+    low = display7codes(low);
 
+    if(displayFlag)
+    {
+        LATDbits.LATD6 = 1;
+        LATDbits.LATD5 = 0; 
+        LATB = (LATB & 0x80FF) | (high << 8);
+    }
+    else
+    {
+        LATDbits.LATD6 = 0;
+        LATDbits.LATD5 = 1; 
+        LATB = (LATB & 0x80FF) | (low << 8);
+    }
+    displayFlag = !displayFlag;
+    return 0;
+}
