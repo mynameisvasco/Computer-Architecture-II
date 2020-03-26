@@ -23,7 +23,7 @@ int main(void)
         while( IFS1bits.AD1IF == 0 );
         printInt(ADC1BUF0, 16 | 3 << 16);
         putChar('\n');
-        AD1CON1bits.CLRASAM = 1; //reset na conversão
+        IFS1bits.AD1IF = 0; //reset na conversão
         delay(1000);
     }
 }
