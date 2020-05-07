@@ -24,7 +24,7 @@ int main(void)
     AD1CON1bits.ON = 1;    // Enable A/D Converter
 
     volatile int aux;
-
+    
     while(1)
     {
         LATEbits.LATE0 = 1;

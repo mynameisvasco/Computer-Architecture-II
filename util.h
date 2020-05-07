@@ -1,4 +1,5 @@
 #include <detpic32.h>
+#include <string.h>
 
 unsigned int display7codes(int i)
 {
@@ -60,4 +61,70 @@ void configAdc()
     IEC1bits.AD1IE = 1;
 
     IFS1bits.AD1IF = 0; // Reset AD1IF flag
+}
+
+void putcUart(char byte2send) 
+{
+    while(U1STAbits.UTXBF == 1);
+    U1TXREG = byte2send;
+}
+
+void putsUart(char *string2send)
+{
+    int size = strlen(string2send);
+    int i = 0;
+    while(i <= (size - 1))
+    {
+        putcUart(string2send[i]);
+        i += 1;
+    }
+}
+
+char getc(void) {
+    // If OERR == 1 then reset OERR
+    if(U1STAbits.OERR == 1) 
+    {
+        U1STAbits.OERR = 0;
+    }
+    while(U1STAbits.URXDA == 0); // Wait while URXDA == 0
+    // If FERR or PERR then
+    if(U1STAbits.FERR || U1STAbits.PERR)
+    {
+        // read UxRXREG (to discard the character) and return 0
+        char c = U1RXREG;
+        return 0;
+    } 
+    return U1RXREG;
+}
+
+void configUart(unsigned int baud, char parity, unsigned int stopbits) 
+{
+    U1BRG = ((20000000 + 8 * baud) / (16 * baud)) - 1;
+    switch(parity) 
+    {
+        case 'N':
+            U1MODEbits.PDSEL = 0; 
+            break;
+        case 'E':
+            U1MODEbits.PDSEL = 1; 
+            break;
+        case 'O':
+            U1MODEbits.PDSEL = 2; 
+            break;
+    }
+    switch(stopbits) 
+    {
+        case 1:
+            U1MODEbits.STSEL = 0; 
+        case 2:
+            U1MODEbits.STSEL = 1;
+            break;
+        default:
+            U1MODEbits.STSEL = 0;
+            break;    
+    }
+    U1STAbits.UTXEN = 1;
+    U1STAbits.URXEN = 1;
+    //IFS0bits.U1TXIF = 0;
+    U1MODEbits.ON = 1;
 }
