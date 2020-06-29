@@ -1,5 +1,5 @@
 #include <detpic32.h>
-#include "../../util.h":
+#include "util.h":
 
 int send2displays(unsigned int value)
 {
@@ -10,16 +10,16 @@ int send2displays(unsigned int value)
     high = display7codes(high);
     low = display7codes(low);
 
-    if(displayFlag)
+    if (displayFlag)
     {
         LATDbits.LATD6 = 1;
-        LATDbits.LATD5 = 0; 
+        LATDbits.LATD5 = 0;
         LATB = (LATB & 0x80FF) | (high << 8);
     }
     else
     {
         LATDbits.LATD6 = 0;
-        LATDbits.LATD5 = 1; 
+        LATDbits.LATD5 = 1;
         LATB = (LATB & 0x80FF) | (low << 8);
     }
     displayFlag = !displayFlag;
@@ -32,14 +32,15 @@ int main(void)
     TRISD = TRISD & 0xFF9F; //configure RD5 to RD6 as outputs
 
     int counter = 0;
-    while(1)
+    while (1)
     {
-       int i = 0;
-		do {
-			delay(10); // wait 10 ms
-			send2displays( counter );
-		} while(++i < 20); // 200 ms = 5 Hz
-		counter++;
+        int i = 0;
+        do
+        {
+            delay(10); // wait 10 ms
+            send2displays(counter, 10);
+        } while (++i < 20); // 200 ms = 5 Hz
+        counter++;
     }
     return 0;
 }

@@ -1,5 +1,5 @@
 #include <detpic32.h>
-#include "../util.h"
+#include "util.h"
 
 int main(void)
 {
@@ -10,7 +10,7 @@ int main(void)
     T3CONbits.TON = 1;   // Enable timer T3 (must be the last command of the
     IEC0bits.T3IE = 0;   // Disable interrupts
 
-    int i = 0; 
+    int i = 0;
     while (1)
     {
         while (!IFS0bits.T3IF)

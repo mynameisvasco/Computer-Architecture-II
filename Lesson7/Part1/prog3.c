@@ -1,5 +1,5 @@
 #include <detpic32.h>
-#include "../util.h"
+#include "util.h"
 
 int i = 0;
 int flag = 0;

@@ -2,18 +2,11 @@
   "configurations": [
     {
       "name": "Linux",
-      "includePath": [
-        "${workspaceFolder}/**",
-        "/opt/pic32mx/bin/**",
-        "/opt/pic32mx/lib/**",
-        "/opt/pic32mx/pic32mx/**",
-        "/opt/pic32mx/include/**",
-        "/opt/pic32mx/man/**"
-      ],
-      "defines": [],
+      "includePath": ["${workspaceFolder}/**", "/opt/pic32mx/include/"],
+      "defines": ["__LANGUAGE_C__"],
       "cStandard": "c11",
       "cppStandard": "c++17",
-      "intelliSenseMode": "gcc-x64"
+      "intelliSenseMode": "${default}"
     }
   ],
   "version": 4

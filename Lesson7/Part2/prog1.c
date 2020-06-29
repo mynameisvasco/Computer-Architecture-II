@@ -1,5 +1,5 @@
 #include <detpic32.h>
-#include "../../util.h"
+#include "util.h"
 
 int main(void)
 {
@@ -11,26 +11,33 @@ int main(void)
     IEC0bits.T3IE = 0;   // Disable interrupts
     TRISB = TRISB & 0xFFDF;
     TRISBbits.TRISB5 = 1;
-    OC1CONbits.OCM = 6; // PWM mode on OCx; fault pin disabled
-    OC1CONbits.OCTSEL = 1;// Use timer T2 as the time base for PWM generation
-    OC1RS = 12500; // Ton constant
-    OC1CONbits.ON = 1; // Enable OC1 module 
+    OC1CONbits.OCM = 6;    // PWM mode on OCx; fault pin disabled
+    OC1CONbits.OCTSEL = 1; // Use timer T2 as the time base for PWM generation
+    OC1RS = 12500;         // Ton constant
+    OC1CONbits.ON = 1;     // Enable OC1 module
 
- 
-    while(1) {
-        while (!IFS0bits.T3IF);
-        while (PORTBbits.RB5 != 0);
-        while (PORTBbits.RB5 == 0);
+    while (1)
+    {
+        while (!IFS0bits.T3IF)
+            ;
+        while (PORTBbits.RB5 != 0)
+            ;
+        while (PORTBbits.RB5 == 0)
+            ;
         resetCoreTimer();
-        while(PORTBbits.RB5 != 0);
+        while (PORTBbits.RB5 != 0)
+            ;
         int tempoOn = readCoreTimer() / 20;
         printInt10(tempoOn);
         putChar(' ');
 
-        while(PORTBbits.RB5 == 0);
-        while(PORTBbits.RB5 != 0);
+        while (PORTBbits.RB5 == 0)
+            ;
+        while (PORTBbits.RB5 != 0)
+            ;
         resetCoreTimer();
-        while(PORTBbits.RB5 == 0);
+        while (PORTBbits.RB5 == 0)
+            ;
         int tempoOff = readCoreTimer() / 20;
         printInt10(tempoOff);
         putChar(' ');

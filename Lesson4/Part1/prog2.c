@@ -1,5 +1,5 @@
 #include <detpic32.h>
-#include "../util.h"
+#include "util.h"
 
 int main(void)
 {
@@ -14,13 +14,13 @@ int main(void)
     LATEbits.LATE3 = 0;
     TRISEbits.TRISE3 = 0;
 
-    while(1)
+    while (1)
     {
         int i;
-        for(i = 0x0000; i < 0x1111; i++)
-        {   
+        for (i = 0x0000; i < 0x1111; i++)
+        {
             LATE = i;
-            delay(250); 
+            delay(250);
         }
     }
     return 0;

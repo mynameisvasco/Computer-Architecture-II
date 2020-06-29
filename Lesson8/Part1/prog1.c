@@ -1,7 +1,7 @@
 #include <detpic32.h>
-#include "../../util.h"
+#include "util.h"
 
-int main(void) 
+int main(void)
 {
     int baudrate = 115200;
     U1BRG = ((20000000 + 8 * baudrate) / (16 * baudrate)) - 1;
@@ -10,9 +10,9 @@ int main(void)
     U1STAbits.UTXEN = 1;
     //IFS0bits.U1TXIF = 0;
     U1MODEbits.ON = 1;
-    while(1) 
+    while (1)
     {
         putsUart("THIS IS A TEST\n");
-        delay(500);    
+        delay(500);
     }
 }

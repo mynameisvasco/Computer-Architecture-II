@@ -1,5 +1,5 @@
 #include <detpic32.h>
-#include "../util.h"
+#include "util.h"
 
 volatile int voltage = 0; // Global variable
 
